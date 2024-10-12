@@ -1,4 +1,7 @@
 chrome.action.onClicked.addListener((tab) => {
+  // Set a flag to indicate analysis is in progress
+  chrome.storage.local.set({ analysisInProgress: true });
+
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     if (!tabs || tabs.length === 0) {
       console.error("No active tab found");
@@ -11,6 +14,10 @@ chrome.action.onClicked.addListener((tab) => {
     chrome.cookies.getAll({ url: tabUrl.origin }, (cookies) => {
       if (chrome.runtime.lastError) {
         console.error("Error getting cookies:", chrome.runtime.lastError);
+        chrome.storage.local.set({ 
+          analysisInProgress: false,
+          popupDisplay: "Error getting cookies: " + chrome.runtime.lastError.message 
+        });
         return;
       }
 
@@ -19,6 +26,10 @@ chrome.action.onClicked.addListener((tab) => {
 
       if (cookieKeys.length === 0) {
         console.log("No cookies found for this site.");
+        chrome.storage.local.set({ 
+          analysisInProgress: false,
+          popupDisplay: "No cookies found for this site." 
+        });
         return;
       }
 
@@ -56,27 +67,18 @@ chrome.action.onClicked.addListener((tab) => {
           }
           let content = data.choices[0].message.content;
           console.log("Extracted content:", content);
-          return new Promise((resolve) => {
-            chrome.storage.local.set({ popupDisplay: content }, () => {
-              if (chrome.runtime.lastError) {
-                console.error("Error storing data:", chrome.runtime.lastError);
-                resolve(null);
-              } else {
-                console.log('Popup display stored:', content);
-                resolve(content);
-              }
-            });
+          chrome.storage.local.set({ 
+            analysisInProgress: false,
+            popupDisplay: content 
           });
         })
-        .then(content => {
-          if (content) {
-            console.log("Content stored and ready for use:", content);
-          } else {
-            console.log("Failed to store content");
-          }
-        })
-        .catch(err => console.error("Error:", err));
-        chrome.runtime.sendMessage({type: 'dataReady'});
+        .catch(err => {
+          console.error("Error:", err);
+          chrome.storage.local.set({ 
+            analysisInProgress: false,
+            popupDisplay: "An error occurred while analyzing cookies: " + err.message 
+          });
+        });
     });
   });
 });
