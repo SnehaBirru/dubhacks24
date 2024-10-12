@@ -3,12 +3,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const cookieOutput = document.getElementById('cookieOutput');
 
   function updateDisplay() {
-    chrome.storage.local.get('popupDisplay', (data) => {
-      loadingIndicator.style.display = 'none';
-      if (data.popupDisplay) {
-        cookieOutput.textContent = data.popupDisplay;
+    chrome.storage.local.get(['analysisInProgress', 'popupDisplay'], (data) => {
+      if (data.analysisInProgress) {
+        loadingIndicator.style.display = 'block';
+        cookieOutput.textContent = 'Analysis in progress...';
       } else {
-        cookieOutput.textContent = 'No cookie data found. Click the extension icon to analyze cookies.';
+        loadingIndicator.style.display = 'none';
+        if (data.popupDisplay) {
+          cookieOutput.textContent = data.popupDisplay;
+        } else {
+          cookieOutput.textContent = 'No cookie data found. Click the extension icon to analyze cookies.';
+        }
       }
     });
   }
@@ -16,16 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Update display when popup opens
   updateDisplay();
 
-  // Listen for updates from background script
-  chrome.runtime.onMessage.addListener((message) => {
-    if (message.type === 'dataReady') {
-      updateDisplay();
-    }
-  });
-
-  // Show loading indicator when extension icon is clicked
-  chrome.action.onClicked.addListener(() => {
-    loadingIndicator.style.display = 'block';
-    cookieOutput.textContent = '';
-  });
+  // Set up an interval to check for updates
+  setInterval(updateDisplay, 1000); // Check every second
 });
