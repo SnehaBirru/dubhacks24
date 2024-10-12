@@ -1,9 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-  chrome.storage.local.get('popupDisplay', (data) => {
-    if (data.popupDisplay) {
-      document.getElementById('cookieOutput').textContent = data.popupDisplay;
-    } else {
-      document.getElementById('cookieOutput').textContent = 'No cookie data found!';
+  const loadingIndicator = document.getElementById('loadingIndicator');
+  const cookieOutput = document.getElementById('cookieOutput');
+
+  function updateDisplay() {
+    chrome.storage.local.get('popupDisplay', (data) => {
+      loadingIndicator.style.display = 'none';
+      if (data.popupDisplay) {
+        cookieOutput.textContent = data.popupDisplay;
+      } else {
+        cookieOutput.textContent = 'No cookie data found. Click the extension icon to analyze cookies.';
+      }
+    });
+  }
+
+  // Update display when popup opens
+  updateDisplay();
+
+  // Listen for updates from background script
+  chrome.runtime.onMessage.addListener((message) => {
+    if (message.type === 'dataReady') {
+      updateDisplay();
     }
+  });
+
+  // Show loading indicator when extension icon is clicked
+  chrome.action.onClicked.addListener(() => {
+    loadingIndicator.style.display = 'block';
+    cookieOutput.textContent = '';
   });
 });
