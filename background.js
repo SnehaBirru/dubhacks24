@@ -34,6 +34,9 @@ chrome.action.onClicked.addListener((tab) => {
         fetch('https://api.perplexity.ai/chat/completions', options)
           .then(response => response.json())
           .then(response => console.log(response))
+          .then(chrome.storage.local.set({ popupDisplay: response.body.choices[0].message.content }, () => {
+            console.log('Popup display stored:', response.body.choices[0].message.content);
+          }))
           .catch(err => console.error(err));
         
         // Log the cookie keys to the console
