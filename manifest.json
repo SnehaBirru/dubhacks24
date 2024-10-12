@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Cookie Fetcher",
+    "name": "Cookie Monster",
     "description": "Fetches cookies from the current tab and returns the cookie keys in JSON format.",
     "version": "1.0",
     "permissions": [
