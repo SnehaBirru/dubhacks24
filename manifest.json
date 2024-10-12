@@ -1,0 +1,23 @@
+{
+    "manifest_version": 3,
+    "name": "Cookie Fetcher",
+    "description": "Fetches cookies from the current tab and returns the cookie keys in JSON format.",
+    "version": "1.0",
+    "permissions": [
+      "cookies",
+      "tabs",
+      "activeTab",
+      "storage"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "host_permissions": [
+      "http://*/*",
+      "https://*/*"
+    ],
+    "action": {
+      "default_popup": "popup.html"
+    }
+  }
+  
