@@ -4,9 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cookie Fetcher</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+    }
+    #loadingIndicator {
+      display: none;
+      color: #666;
+      font-style: italic;
+    }
+    #cookieOutput {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
 </head>
 <body>
   <h1>Welcome to Cookie Monster!</h1>
+  <div id="loadingIndicator">Analyzing cookies...</div>
   <pre id="cookieOutput"></pre>
 
   <script src="popup.js"></script>
