@@ -76,6 +76,7 @@ chrome.action.onClicked.addListener((tab) => {
           }
         })
         .catch(err => console.error("Error:", err));
+        chrome.runtime.sendMessage({type: 'dataReady'});
     });
   });
 });
