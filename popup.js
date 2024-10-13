@@ -112,6 +112,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 
   function removeAllCookies(jsonFile) {
     let parsedJson = JSON.parse(jsonFile);
+    let cleardCookiesCount = 0;
+    if ( parsedJson.cookies.length == 0) {
+      alert("No cookies to remove");
+    }
     parsedJson.cookies.forEach((cookie) => {
       chrome.cookies.remove(
         {
@@ -121,8 +125,14 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         (details) => {
           if (details === null) {
             console.error(`Error removing cookie "${cookie}": ${details.cause}`);
+            alert(`Error removing cookie "${cookie}": ${details.cause}`);
           } else {
             console.log(`Cookie "${cookie}" removed successfully.`);
+            cleardCookiesCount++;
+            console.log(cleardCookiesCount);
+            if (cleardCookiesCount == parsedJson.cookies.length) {
+              alert("All cookies cleared successfully!");
+            }
           }
         }
       );
