@@ -7,16 +7,20 @@ chrome.action.setIcon({
   }
 });
 
+let tabUrl = "";
+let cookieJson = {};
+
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     // Display the cookie keys in the popup
     document.getElementById('cookieOutput').textContent = "Analyzing cookies...";
     const currentTab = tabs[0];
-    const tabUrl = new URL(currentTab.url);
+    tabUrl = new URL(currentTab.url);
   
     chrome.cookies.getAll({ url: tabUrl.origin }, (cookies) => {
       let cookieKeys = cookies.map(cookie => cookie.name);  // Extract cookie keys
-      let cookieJson = JSON.stringify({ cookies: cookieKeys }, null, 2);  // Format as JSON
-      console.log(cookieKeys)
+
+      cookieJson = JSON.stringify({ cookies: cookieKeys }, null, 2);  // Format as JSON
+      console.log(cookieJson)
 
       let body = JSON.stringify({
         "model": "llama-3.1-sonar-small-128k-online",
@@ -53,5 +57,30 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         document.getElementById('cookieOutput').textContent = content; // This stores the content in the cookieOutput element
       })
       .catch(err => console.error(err));
+    });
+  });
+
+  function removeAllCookies(jsonFile) {
+    let parsedJson = JSON.parse(jsonFile);
+    parsedJson.cookies.forEach((cookie) => {
+      chrome.cookies.remove(
+        {
+          url: tabUrl.toString(),
+          name: cookie,
+        },
+        (details) => {
+          if (details === null) {
+            console.error(`Error removing cookie "${cookie}": ${details.cause}`);
+          } else {
+            console.log(`Cookie "${cookie}" removed successfully.`);
+          }
+        }
+      );
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('clearCookiesBtn').addEventListener('click', function() {
+      removeAllCookies(cookieJson);
     });
   });
