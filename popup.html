@@ -12,7 +12,7 @@
       font-family: Arial, sans-serif;
       background-color: mediumpurple;
     }
-    h1,h3,p {
+    h1,h2,p {
       color:white;
     }
     #loadingIndicator {
@@ -24,7 +24,7 @@
       display: flex; 
       justify-content: flex-start;
       align-items: center;
-      padding: 2rem 2rem;
+      padding: 0;
     }
     #cookieOutput {
       white-space: pre-wrap;
@@ -98,6 +98,7 @@
 </head>
 <body>
   <h1>🍪 Welcome to Cookie Monster!</h1>
+  <h2>All Cookies Used</h3>
   <div class="parent">
     <div id="cookieJar" class="child">
       <img src="cookie-jar.png" alt="Cookie Jar" style="width: 100%; height: auto; display: block; margin: 0;">
@@ -105,17 +106,16 @@
       <div id="cookieCount">0 / 50 cookies</div>
     </div>
     <div class="child">
-      <h3>All Cookies Used</h3>
-      <ul id="cookieNames"></ul>
+      <ul id="cookieNames" style="text-wrap: wrap;"></ul>
     </div>
   </div>
-  <p> ⚠️ Warning: removing all cookies may log user out of the website or cause other unintended consequences ⚠️</p>
-  <button class="button-11" id="clearCookiesBtn">Clear All Cookies</button>
-  <h3>Potentially Risky Cookies</h3>
+  <h2>Potentially Risky Cookies</h3>
   <div>
     <div id="loadingIndicator">Analyzing cookies...</div>
     <pre id="cookieOutput"></pre>
   </div>
+  <p> ⚠️ Warning: removing all cookies may log user out of the website or cause other unintended consequences ⚠️</p>
+  <button class="button-11" id="clearCookiesBtn">Clear All Cookies</button>
   <script src="popup.js"></script>
 </body>
 </html>
