@@ -31,6 +31,47 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         cookieList.appendChild(li);  // Append the li to the ul
       });
 
+      // Set the cookie count
+      const cookieCount = Math.min(cookieKeys.length, 50);
+      const jarHeight = 200; // height of jar in pixels
+      const jarWidth = 100; // width of jar in pixels
+      const cookieSize = 20; // size of each cookie image
+      const cookieContainer = document.getElementById("cookieContainer");
+
+      // Clear previous cookies
+      cookieContainer.innerHTML = '';
+
+      // Calculate how many cookies can fit in one row
+      const cookiesPerRow = Math.floor(jarWidth / cookieSize);
+      const maxRows = Math.floor(jarHeight / cookieSize);
+      const filledRows = Math.min(Math.ceil(cookieCount / cookiesPerRow), maxRows);
+
+      // Create cookie elements
+      let cookieIndex = 0;
+      for (let row = 0; row < filledRows; row++) {
+          for (let col = 0; col < cookiesPerRow; col++) {
+              if (cookieIndex >= cookieCount) break; // Stop if we've placed all cookies
+
+              const cookie = document.createElement("img");
+              cookie.src = "cookie.png"; // replace with your cookie image path
+              cookie.style.position = "absolute";
+              cookie.style.width = `${cookieSize}px`;
+              cookie.style.height = `${cookieSize}px`;
+
+              // Set the position of each cookie
+              const x = col * cookieSize + Math.random() * (cookieSize * 0.4) + 7; // Add a small random jitter
+              const y = jarHeight - (row + 1) * (cookieSize * 0.75) - 50; // Fill from the bottom
+              cookie.style.left = `${x}px`;
+              cookie.style.top = `${y}px`;
+
+              cookieContainer.appendChild(cookie);
+              cookieIndex++;
+          }
+      }
+
+      // Update cookie visual
+      document.getElementById('cookieCount').textContent = `${cookieCount} / 50 cookies`;
+
       let body = JSON.stringify({
         "model": "llama-3.1-sonar-small-128k-online",
         "messages": [
