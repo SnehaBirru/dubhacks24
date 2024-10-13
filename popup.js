@@ -1,3 +1,12 @@
+chrome.action.setIcon({
+  path: {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon.png"
+  }
+});
+
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     // Display the cookie keys in the popup
     document.getElementById('cookieOutput').textContent = "Analyzing cookies...";
@@ -13,7 +22,16 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         "model": "llama-3.1-sonar-small-128k-online",
         "messages": [
           {"role": "system", "content": "Be precise and concise."},
-          {"role": "system", "content": "In your response start by saying \"The following cookies could be storing dangerous information:\" then list the dangerous cookies with a 1 sentence explanation of why it could be dangerous. If a cookie is not explicitly mentioned as vulnerable don't include it in the list. Can you sort the dangerous cookies into high risk, medium risk, and low risk when you list them out, it's okay if some categories don't have cookies in them. If there's no cookies that are vulnerable then say \"No dangerous cookies!\" instead. Either list the risky cookies or say no dangerous cookies, don't say both in your response. Do not include anything other than the sorted list in your response if there are dangerous cookies."},
+          {"role": "system", "content": "In your response start by saying \"The following cookies could \
+            be storing dangerous information:\" then list the dangerous cookies with a 1 sentence explanation \
+            of why it could be dangerous, categorizing them as high risk, medium risk, and low risk. If a \
+            cookie is not explicitly mentioned as vulnerable don't include \
+            it in the list. Don't mention the vulnerable cookies. Sort the dangerous cookies into high risk, \
+            medium risk, and low risk when \
+            you list them out, it's okay if some categories don't have cookies in them. Do not respond with anything \
+            other than the list. If there's no cookies \
+            that are vulnerable then say \"No dangerous cookies!\" . Either list the risky cookies or \
+            say no dangerous cookies, do not say both."},
           {"role": "user", "content": "Are any of these cookies potentially having dangerous information: " + cookieKeys.join(", ")}
         ]
       });
