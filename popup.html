@@ -6,7 +6,8 @@
   <title>Cookie Fetcher</title>
   <style>
     body {
-      width: 300px;
+      width: 450px;
+      height: 500px;
       padding: 10px;
       font-family: Arial, sans-serif;
       background-color: mediumpurple;
@@ -24,13 +25,17 @@
       word-wrap: break-word;
       color:white;
     }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
   <h1>🍪 Welcome to Cookie Monster!</h1>
-  <div id="loadingIndicator">Analyzing cookies...</div>
-  <pre id="cookieOutput"></pre>
-
+  <div>
+    <div id="loadingIndicator">Analyzing cookies...</div>
+    <pre id="cookieOutput"></pre>
+  </div>
   <script src="popup.js"></script>
   <p> ⚠️ Warning: removing all cookies may log user out of the website or cause other unintended consequences ⚠️</p>
   <button id="clearCookiesBtn">Clear All Cookies</button>
