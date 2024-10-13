@@ -98,21 +98,20 @@
 </head>
 <body>
   <h1>🍪 Welcome to Cookie Monster!</h1>
-  <h3>All Cookies Used</h3>
-  <ul id="cookieNames"></ul>
-  <h3>Potentially Risky Cookies</h3>
   <div class="parent">
     <div id="cookieJar" class="child">
       <img src="cookie-jar.png" alt="Cookie Jar" style="width: 100%; height: auto; display: block; margin: 0;">
       <div id="cookieContainer" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" margin-bottom: 0px></div>
+      <div id="cookieCount">0 / 50 cookies</div>
     </div>
     <div class="child">
-      <div id="cookieCount">0 / 50 cookies</div>
-      <p> ⚠️ Warning: removing all cookies may log user out of the website or cause other unintended consequences ⚠️</p>
-      <button class="button-11" id="clearCookiesBtn">Clear All Cookies</button>
+      <h3>All Cookies Used</h3>
+      <ul id="cookieNames"></ul>
     </div>
   </div>
-
+  <p> ⚠️ Warning: removing all cookies may log user out of the website or cause other unintended consequences ⚠️</p>
+  <button class="button-11" id="clearCookiesBtn">Clear All Cookies</button>
+  <h3>Potentially Risky Cookies</h3>
   <div>
     <div id="loadingIndicator">Analyzing cookies...</div>
     <pre id="cookieOutput"></pre>
