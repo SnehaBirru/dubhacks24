@@ -12,7 +12,7 @@
       font-family: Arial, sans-serif;
       background-color: mediumpurple;
     }
-    h1,p {
+    h1,h3,p {
       color:white;
     }
     #loadingIndicator {
@@ -25,19 +25,55 @@
       word-wrap: break-word;
       color:white;
     }
+    #cookieNames {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      color:white;
+    }
     .hidden {
       display: none;
+    }
+
+  .button-11 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+    border-radius: 6px;
+    color: #492c17;
+    background: #fff;
+    border: none;
+    box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+
+  .button-11:focus {
+    box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+    outline: 0;
+  }
+
+    #arrayDisplay {
+      margin-top: 10px;
+      padding: 10px;
+      /* border: 1px solid #ccc; */
+      /* background-color: #f9f9f9; */
     }
   </style>
 </head>
 <body>
   <h1>🍪 Welcome to Cookie Monster!</h1>
+  <h3>All Cookies Used</h3>
+  <ul id="cookieNames"></ul>
+  <h3>Potentially Risky Cookies</h3>
   <div>
     <div id="loadingIndicator">Analyzing cookies...</div>
     <pre id="cookieOutput"></pre>
   </div>
-  <script src="popup.js"></script>
   <p> ⚠️ Warning: removing all cookies may log user out of the website or cause other unintended consequences ⚠️</p>
-  <button id="clearCookiesBtn">Clear All Cookies</button>
+  <button class="button-11" id="clearCookiesBtn">Clear All Cookies</button>
+  <script src="popup.js"></script>
 </body>
 </html>

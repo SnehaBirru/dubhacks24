@@ -20,7 +20,16 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       let cookieKeys = cookies.map(cookie => cookie.name);  // Extract cookie keys
 
       cookieJson = JSON.stringify({ cookies: cookieKeys }, null, 2);  // Format as JSON
-      console.log(cookieJson)
+      console.log(cookieKeys)
+
+      const cookieList = document.getElementById('cookieNames');
+
+      // Iterate over the array and create a list item for each element
+      cookieKeys.forEach(function(item) {
+        const li = document.createElement('li');
+        li.textContent = item;  // Set the text content to the array item
+        cookieList.appendChild(li);  // Append the li to the ul
+      });
 
       let body = JSON.stringify({
         "model": "llama-3.1-sonar-small-128k-online",
