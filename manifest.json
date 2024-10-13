@@ -3,6 +3,12 @@
     "name": "Cookie Monster",
     "description": "Fetches cookies from the current tab and returns the cookie keys in JSON format.",
     "version": "1.0",
+    "icons": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon.png"
+    },
     "permissions": [
       "cookies",
       "tabs",
