@@ -93,7 +93,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const options = {
         method: 'POST',
         headers: {
-          Authorization: 'Bearer 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',
+          Authorization: /*insert authentication key to use perplexity*/,
           'Content-Type': 'application/json'
         },
         body: body
